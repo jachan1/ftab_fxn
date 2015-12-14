@@ -7,7 +7,7 @@ ds <- data_frame(widget=sample(c(1,1,1,2,2,3,4), n, replace=T),
                  colors=sample(c(1,2,3,"1, 2", "1, 3", "2, 3", -8), n, replace=T),
                  grp=sample(letters[1:3], n, replace=T))
 
-source("I:/Analytics/R Tools/R_functions/Table_Maker/stab_fxn.R")
+source("https://github.com/jachan1/ftab_fxn/blob/master/stab_fxn.R")
 ## basic tables for single and multi select vars
 (tab1 <- ftab_fxn(ex_df, ds))
 ## ignore not recorded
