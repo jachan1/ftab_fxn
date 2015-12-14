@@ -7,7 +7,20 @@ ds <- data_frame(widget=sample(c(1,1,1,2,2,3,4), n, replace=T),
                  colors=sample(c(1,2,3,"1, 2", "1, 3", "2, 3", -8), n, replace=T),
                  grp=sample(letters[1:3], n, replace=T))
 
-source("https://github.com/jachan1/ftab_fxn/blob/master/stab_fxn.R")
+source_https <- function(url, ...) {
+  # load package
+  require(RCurl)
+  
+  # parse and evaluate each .R script
+  tmp <- sapply(c(url, ...), function(u) {
+    eval(parse(text = getURL(u, followlocation = TRUE, cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))), envir = .GlobalEnv)
+  })
+  message(sprintf("%s loaded into global environment", paste(substr(names(tmp), max(grep("/", strsplit(names(tmp), "")[[1]]))+1, nchar(names(tmp))), collapse=", ")))
+}
+
+# Example
+source_https("https://raw.githubusercontent.com/jachan1/ftab_fxn/master/stab_fxn.R")
+
 ## basic tables for single and multi select vars
 (tab1 <- ftab_fxn(ex_df, ds))
 ## ignore not recorded
